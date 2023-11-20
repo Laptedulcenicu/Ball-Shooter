@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "BS.Common",
-        "BS.Services.Common"
+        "BS.Services.Common",
+        "BS.External"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
