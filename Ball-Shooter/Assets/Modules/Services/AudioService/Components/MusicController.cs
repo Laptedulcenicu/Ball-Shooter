@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Modules.Services.AudioService
 {
     public class MusicController : MonoBehaviour
     {
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private List<MusicPlaylist> musicPlaylists;
+        [SerializeField] private MusicPlaylist musicPlaylists;
 
-        private IMusicPlaylist _currentPlaylist;
-
-        private bool IsPlaylistAvailable => _currentPlaylist is { HasTracks: true };
+        private bool IsPlaylistAvailable => musicPlaylists is { HasTracks: true };
 
         private void Awake()
         {
@@ -33,26 +30,24 @@ namespace Modules.Services.AudioService
                 return;
             }
 
-            audioSource.clip = _currentPlaylist.GetNextTrack();
+            audioSource.clip = musicPlaylists.GetNextTrack();
             audioSource.Play();
         }
 
         private void Play()
         {
-            _currentPlaylist = musicPlaylists[Random.Range(0, musicPlaylists.Count)];
             if (!IsPlaylistAvailable)
             {
                 return;
             }
 
-            audioSource.clip = _currentPlaylist.GetNextTrack();
+            audioSource.clip = musicPlaylists.GetNextTrack();
             audioSource.Play();
         }
 
         private void Stop()
         {
             audioSource.Stop();
-            _currentPlaylist = null;
         }
 
         public void PlayMusic()

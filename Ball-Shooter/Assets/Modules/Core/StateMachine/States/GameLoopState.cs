@@ -1,5 +1,7 @@
 ﻿using System;
 using Modules.Common;
+using Modules.Core.Scripts.Utilities;
+using UnityEngine.SceneManagement;
 
 namespace Modules.Core
 {
@@ -31,9 +33,9 @@ namespace Modules.Core
 
         public void Enter()
         {
-            // var scene = SceneManager.GetActiveScene();
-            // var sceneController = scene.GetComponent<GameplaySceneController>();
-            // sceneController.Initialize(_progressData, _inputSource, _audioService, _onRestart,_sceneTransitionService);
+            var scene = SceneManager.GetActiveScene();
+            var sceneController = scene.GetComponent<GameplaySceneController>();
+            sceneController.Initialize(_sceneTransitionService);
         }
     }
 }
