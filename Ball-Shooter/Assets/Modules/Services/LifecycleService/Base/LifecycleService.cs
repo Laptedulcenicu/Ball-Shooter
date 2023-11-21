@@ -7,8 +7,9 @@ namespace Modules.Services.LifecycleService
     {
         private readonly List<ILifecycleDelegate> _subscribers = new();
 
-        public LifecycleService(IApplicationObserver applicationObserver)
+        public LifecycleService(IServiceFactory factoryService)
         {
+            var applicationObserver = factoryService.CreateApplicationObserver().GetComponent<ApplicationObserver>();
             AddListeners(applicationObserver);
         }
 

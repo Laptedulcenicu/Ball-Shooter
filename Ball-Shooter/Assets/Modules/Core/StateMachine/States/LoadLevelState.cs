@@ -8,12 +8,10 @@ namespace Modules.Core
         private const string k_SceneName = "Gameplay";
         private readonly ISceneTransitionService _transitionService;
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IApplicationContext _applicationContext;
 
-        public LoadLevelState(IApplicationContext applicationContext, ISceneTransitionService sceneTransitionService,
+        public LoadLevelState(ISceneTransitionService sceneTransitionService,
             GameStateMachine gameStateMachine)
         {
-            _applicationContext = applicationContext;
             _transitionService = sceneTransitionService;
             _gameStateMachine = gameStateMachine;
         }

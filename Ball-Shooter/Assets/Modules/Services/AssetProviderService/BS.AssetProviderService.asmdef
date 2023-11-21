@@ -1,18 +1,9 @@
 {
-    "name": "BS.Core",
+    "name": "BS.AssetProviderService",
     "rootNamespace": "",
     "references": [
         "BS.Common",
-        "BS.Services.Common",
-        "BS.DataService",
-        "BS.InputService",
-        "BS.AudioService",
-        "BS.UIService",
-        "BS.LifecycleService",
-        "BS.SceneTransitionService",
-        "BS.Gameplay",
-        "BS.AssetProviderService",
-        "BS.FactoryService"
+        "BS.Services.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

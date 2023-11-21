@@ -11,9 +11,9 @@ namespace Modules.Services.SceneTransitionService
         private AsyncOperation _asyncOperation;
         private Action _onLoaded;
 
-        public SceneTransitionService(SceneTransitionFadeController fadeController)
+        public SceneTransitionService(IServiceFactory serviceFactory)
         {
-            _fadeController = fadeController;
+            _fadeController = serviceFactory.CreateFadeController().GetComponent<SceneTransitionFadeController>();
         }
 
         public void ChangeScene(string sceneName, Action onLoaded = null)

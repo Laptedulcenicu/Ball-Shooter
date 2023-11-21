@@ -9,10 +9,10 @@ namespace Modules.Services.AudioService
         private readonly MusicController _musicController;
         private readonly SoundController _soundController;
 
-        public AudioService(MusicController musicController, SoundController soundController)
+        public AudioService(IServiceFactory serviceFactory)
         {
-            _musicController = musicController;
-            _soundController = soundController;
+            _musicController = serviceFactory.CreateMusicController().GetComponent<MusicController>();
+            _soundController = serviceFactory.CreateSoundController().GetComponent<SoundController>();
         }
 
         public void PlayMusic()
