@@ -19,7 +19,7 @@ namespace Modules.Core
         private ISceneTransitionService _sceneTransitionService;
         private IAssetProviderService _assetProviderService;
         private IFactoryService _factoryService;
-        
+
         public void Initialize()
         {
             InitializeServices();
@@ -27,7 +27,6 @@ namespace Modules.Core
             _gameStateMachine = new GameStateMachine();
             AddStates();
 
-            _audioService.PlayMusic();
             _gameStateMachine.Enter<LoadProgressDataState>();
         }
 
@@ -35,7 +34,8 @@ namespace Modules.Core
         {
             var loadProgressDataState = new LoadProgressDataState(_dataService.ProgressData,
                 _dataService.ApplicationCache, _lifecycleService, _gameStateMachine);
-            var loadLevelState = new LoadLevelState(_sceneTransitionService, _gameStateMachine);
+            var loadLevelState = new LoadLevelState(_audioService, _factoryService.SceneFactory,
+                _factoryService.UIFactory, _sceneTransitionService, _gameStateMachine);
             var gameLoopState = new GameLoopState(_dataService.ProgressData.Level, _inputService.InputSource,
                 _audioService, _sceneTransitionService, _gameStateMachine);
 

@@ -1,14 +1,17 @@
 ﻿using Modules.Common;
+using UnityEngine;
 
 namespace Modules.Services.FactoryService
 {
     public class UIFactory : IUIFactory
     {
-        private IAssetProviderService _assetProviderService;
+        private readonly IAssetProviderService _assetProvider;
 
         public UIFactory(IAssetProviderService assetProviderService)
         {
-            _assetProviderService = assetProviderService;
+            _assetProvider = assetProviderService;
         }
+
+        public GameObject CreateUI() => _assetProvider.Instantiate(AssetPath.UI);
     }
 }
