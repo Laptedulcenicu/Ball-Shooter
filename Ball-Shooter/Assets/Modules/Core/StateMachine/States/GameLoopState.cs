@@ -1,6 +1,7 @@
 ﻿using System;
 using Modules.Common;
 using Modules.Core.Scripts.Utilities;
+using Modules.Gameplay;
 using UnityEngine.SceneManagement;
 
 namespace Modules.Core
@@ -14,8 +15,7 @@ namespace Modules.Core
         private readonly GameStateMachine _gameStateMachine;
         private readonly ISceneTransitionService _sceneTransitionService;
 
-        public GameLoopState(Level level, IInputSource inputSource, IAudioService audioService,
-            ISceneTransitionService sceneTransitionService, GameStateMachine gameStateMachine)
+        public GameLoopState(Level level, IInputSource inputSource, IAudioService audioService, ISceneTransitionService sceneTransitionService, GameStateMachine gameStateMachine)
         {
             //m_ProgressData = progressData;
             _inputSource = inputSource;
@@ -35,7 +35,7 @@ namespace Modules.Core
         {
             var scene = SceneManager.GetActiveScene();
             var sceneController = scene.GetComponent<GameplaySceneController>();
-            sceneController.Initialize(_sceneTransitionService);
+            sceneController.Initialize(_inputSource,_sceneTransitionService);
         }
     }
 }
