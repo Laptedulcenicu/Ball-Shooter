@@ -37,7 +37,7 @@ namespace Modules.Core
         {
             var scene = SceneManager.GetActiveScene();
             var sceneController = scene.GetComponent<GameplaySceneController>();
-            
+
             InitScene(sceneController);
             InitUI(sceneController);
 
@@ -47,7 +47,7 @@ namespace Modules.Core
         private void InitUI(GameplaySceneController sceneController)
         {
             var ui = _uiFactory.CreateUI();
-            sceneController.UI = ui;
+            sceneController.UIController = ui.GetComponent<IUIController>();
         }
 
         private void InitScene(GameplaySceneController sceneController)
@@ -85,7 +85,7 @@ namespace Modules.Core
             foreach (var sceneControllerEnemiesMarker in sceneController.EnemiesMarkers)
             {
                 var currentEnemy = _sceneFactory.CreateEnemy();
-                sceneController.Enemies.Add(currentEnemy);
+                sceneController.Enemies.Add(currentEnemy.GetComponent<EnemyDeath>());
                 InitObject(currentEnemy.transform, sceneControllerEnemiesMarker);
             }
         }

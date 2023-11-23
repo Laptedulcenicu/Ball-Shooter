@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Modules.Common;
 using UnityEngine;
@@ -17,8 +18,8 @@ namespace Modules.Gameplay
         public GameObject Player { get; set; }
         public GameObject Gate { get; set; }
         public GameObject LineView { get; set; }
-        public List<GameObject> Enemies { get; set; } = new();
-        public GameObject UI { get; set; }
+        public List<EnemyDeath> Enemies { get; } = new();
+        public IUIController UIController { get; set; }
 
         public Transform PlayerMarker => playerMarker;
 
@@ -29,11 +30,27 @@ namespace Modules.Gameplay
         public Transform[] EnemiesMarkers => enemiesMarkers;
 
 
-        public void Initialize(IInputSource inputSource, ISceneTransitionService sceneTransitionService)
+        public void Initialize(IInputSource inputSource, IAudioService audioService, Level level, ISceneTransitionService sceneTransitionService, Action onRestart)
         {
             SetInputSource(inputSource);
             InitializeInteractableController(inputSource);
+            InitializeEnemies(audioService);
+            InitializeSizeController();
+            InitializeGameplayUI(level, onRestart);
             sceneTransitionService.FadeOut();
+        }
+
+
+        private void InitializeSizeController()
+        {
+        }
+
+        private void InitializeEnemies(IAudioService audioService)
+        {
+            foreach (var enemy in Enemies)
+            {
+                enemy.Initialize(audioService);
+            }
         }
 
         private void InitializeInteractableController(IInputSource inputSource)
@@ -45,6 +62,20 @@ namespace Modules.Gameplay
         {
             _inputController = inputControllerParent.GetComponent<IInputController>();
             _inputController.Setup(inputSource);
+        }
+
+        private void InitializeGameplayUI(Level level, Action onRestart)
+        {
+            UIController.Initialize(level.CurrentLevel);
+            UIController.OnRestart += onRestart;
+            UIController.OnNextLevel += onRestart;
+            UIController.OnPlay += Play;
+        }
+
+        private void Play()
+        {
+            interactableController.CanControl = true;
+            UIController.Play();
         }
     }
 }

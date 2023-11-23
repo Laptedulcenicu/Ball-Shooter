@@ -14,10 +14,12 @@ namespace Modules.Core
         private readonly IAudioService _audioService;
         private readonly GameStateMachine _gameStateMachine;
         private readonly ISceneTransitionService _sceneTransitionService;
+        private readonly Level _level;
 
-        public GameLoopState(Level level, IInputSource inputSource, IAudioService audioService, ISceneTransitionService sceneTransitionService, GameStateMachine gameStateMachine)
+        public GameLoopState(Level level, IInputSource inputSource, IAudioService audioService,
+            ISceneTransitionService sceneTransitionService, GameStateMachine gameStateMachine)
         {
-            //m_ProgressData = progressData;
+            _level = level;
             _inputSource = inputSource;
             _audioService = audioService;
             _gameStateMachine = gameStateMachine;
@@ -35,7 +37,7 @@ namespace Modules.Core
         {
             var scene = SceneManager.GetActiveScene();
             var sceneController = scene.GetComponent<GameplaySceneController>();
-            sceneController.Initialize(_inputSource,_sceneTransitionService);
+            sceneController.Initialize(_inputSource, _audioService,_level, _sceneTransitionService,_onRestart);
         }
     }
 }

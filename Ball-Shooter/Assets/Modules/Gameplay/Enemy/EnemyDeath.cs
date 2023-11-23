@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Modules.Common;
 using UnityEngine;
 
 namespace Modules.Gameplay
@@ -9,7 +10,14 @@ namespace Modules.Gameplay
         [SerializeField] private Collider enemyCollider;
         [SerializeField] private EnemyAnimator enemyAnimator;
 
+        private IAudioService _audioService;
+
         private bool _isDeath;
+
+        public void Initialize(IAudioService audioService)
+        {
+            _audioService = audioService;
+        }
 
         public void Die()
         {
