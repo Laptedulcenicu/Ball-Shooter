@@ -12,7 +12,7 @@ namespace Modules.Gameplay
         private PrefabPool _bulletPool;
         private BulletView _currentActiveBullet;
         private KilledEnemyChecker _killedEnemyChecker;
-        private const float k_SizeDeathZoneMultiplayer = 1.03f;
+        private const float k_SizeDeathZoneMultiplayer = 1.05f;
 
         public BulletView CurrentActiveBullet => _currentActiveBullet;
 
