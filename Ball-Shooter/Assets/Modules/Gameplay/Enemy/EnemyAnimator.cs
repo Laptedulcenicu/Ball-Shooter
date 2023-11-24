@@ -9,7 +9,7 @@ namespace Modules.Gameplay
 
         public void PlayDeath()
         {
-            animator.SetTrigger(s_Die);
+           // animator.SetTrigger(s_Die);
         }
     }
 }

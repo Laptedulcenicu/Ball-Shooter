@@ -14,6 +14,8 @@ namespace Modules.Gameplay
 
         private bool _isDeath;
 
+        public bool IsActive => !_isDeath;
+
         public void Initialize(IAudioService audioService)
         {
             _audioService = audioService;
@@ -27,6 +29,7 @@ namespace Modules.Gameplay
 
         private void Die()
         {
+            _isDeath = true;
             enemyCollider.enabled = false;
             enemyAnimator.PlayDeath();
             DOVirtual.DelayedCall(1, ActivateFX);

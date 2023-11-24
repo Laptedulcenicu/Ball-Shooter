@@ -9,6 +9,8 @@ namespace Modules.Gameplay
         [SerializeField] private bool ignoreAxisZ;
         [SerializeField] private Transform transformModel;
 
+        public Transform TransformModel => transformModel;
+
         public void ChangeCurrentSize(float sizeAmount)
         {
             var localScale = transformModel.localScale;

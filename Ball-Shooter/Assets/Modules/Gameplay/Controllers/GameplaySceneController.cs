@@ -31,12 +31,15 @@ namespace Modules.Gameplay
         public InteractableController InteractableController => interactableController;
 
 
-        public void Initialize(IInputSource inputSource, IAudioService audioService, ISceneTransitionService sceneTransitionService, GameLoopEvents gameLoopEvents, SizeConverter sizeConverter)
+        public void Initialize(IInputSource inputSource, IAudioService audioService,
+            ISceneTransitionService sceneTransitionService, GameLoopEvents gameLoopEvents, SizeConverter sizeConverter,
+            KilledEnemyChecker killedEnemyChecker)
         {
             SetInputSource(inputSource);
-            InitializeInteractableController(inputSource,sizeConverter);
+            InitializeInteractableController(inputSource, sizeConverter);
             InitializeEnemies(audioService);
             GateView.Initialize(audioService, gameLoopEvents);
+            Player.Initialize(gameLoopEvents,killedEnemyChecker);
             sceneTransitionService.FadeOut();
         }
 
@@ -54,7 +57,7 @@ namespace Modules.Gameplay
             _inputController.Setup(inputSource);
         }
 
-        private void InitializeInteractableController(IInputSource inputSource,SizeConverter sizeConverter) =>
-            interactableController.Initialize(inputSource,sizeConverter,Player);
+        private void InitializeInteractableController(IInputSource inputSource, SizeConverter sizeConverter) =>
+            interactableController.Initialize(inputSource, sizeConverter, Player);
     }
 }

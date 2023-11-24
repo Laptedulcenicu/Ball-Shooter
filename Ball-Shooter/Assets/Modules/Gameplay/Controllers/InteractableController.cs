@@ -5,7 +5,7 @@ namespace Modules.Gameplay
 {
     public class InteractableController : MonoBehaviour
     {
-        private const float k_SizeSpeedChange = 1;
+        private const float k_SizeSpeedChange = 0.2f;
 
         private IInputSource _inputSource;
         private SizeConverter _sizeConverter;
@@ -45,7 +45,10 @@ namespace Modules.Gameplay
         {
             if (CanControl)
             {
-                _playerView.PlayerShoot.InitializeBullet();
+                if (_playerView.PlayerShoot.CurrentActiveBullet == null)
+                {
+                    _playerView.PlayerShoot.InitializeBullet();
+                }
             }
 
             _inputEventData = inputEventData;
@@ -56,9 +59,11 @@ namespace Modules.Gameplay
             _inputEventData = inputEventData;
 
             if (!CanControl) return;
-
-            _playerView.PlayerShoot.Shoot();
-            //   CanControl = false;
+            if (_playerView.PlayerShoot.CanShoot())
+            {
+                _playerView.PlayerShoot.Shoot();
+                CanControl = false;
+            }
         }
 
         private void AddInputListeners()

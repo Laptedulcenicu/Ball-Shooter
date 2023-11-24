@@ -12,7 +12,7 @@ namespace Modules.Gameplay
         private IAudioService _audioService;
         private GameLoopEvents _gameLoopEvents;
         private bool _isInteracted;
-
+        public bool IsActive => !_isInteracted;
         public void Initialize(IAudioService audioService, GameLoopEvents gameLoopEvents)
         {
             _gameLoopEvents = gameLoopEvents;
@@ -31,6 +31,8 @@ namespace Modules.Gameplay
             //  _audioService.PlayOneShotSound();
             gateAnimator.OpenDoor();
         }
+
+
 
         public void Interact()
         {
