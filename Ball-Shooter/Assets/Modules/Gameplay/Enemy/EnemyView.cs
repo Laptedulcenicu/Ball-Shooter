@@ -6,6 +6,7 @@ namespace Modules.Gameplay
 {
     public class EnemyView : MonoBehaviour, IInteractable
     {
+        [SerializeField] private AudioClip dieAudio;
         [SerializeField] private GameObject deathFx;
         [SerializeField] private Collider enemyCollider;
         [SerializeField] private EnemyAnimator enemyAnimator;
@@ -37,7 +38,8 @@ namespace Modules.Gameplay
 
         private void ActivateFX()
         {
-            //  Instantiate(deathFx, transform.position, Quaternion.identity);
+            _audioService.PlayOneShotSound(dieAudio,0.1f);
+            Instantiate(deathFx, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
     }

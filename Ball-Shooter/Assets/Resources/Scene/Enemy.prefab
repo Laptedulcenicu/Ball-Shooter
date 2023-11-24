@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e851de54d01bed541ba984dad1dffa4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathFx: {fileID: 0}
+  dieAudio: {fileID: 8300000, guid: 1561f29c449c2c440a3c81f3f08b1c4f, type: 3}
+  deathFx: {fileID: 8255215019295333937, guid: 139c09de669d89546999f577551dd885, type: 3}
   enemyCollider: {fileID: 4870512235160817865}
   enemyAnimator: {fileID: -4774985849185818734}
 --- !u!65 &4870512235160817865

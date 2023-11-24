@@ -1,10 +1,13 @@
-﻿using StansAssets.Foundation.Patterns;
+﻿using Modules.Common;
+using StansAssets.Foundation.Patterns;
 using UnityEngine;
 
 namespace Modules.Gameplay
 {
     public class BulletView : MonoBehaviour
     {
+        [SerializeField] private AudioClip bulletAudio;
+        [SerializeField] private GameObject shootParticles;
         [SerializeField] private TriggerObserver triggerObserver;
         [SerializeField] private BulletDeathZone bulletDeathZone;
         [SerializeField] private SizeSetter sizeSetter;
@@ -12,6 +15,7 @@ namespace Modules.Gameplay
 
         private KilledEnemyChecker _killedEnemyChecker;
         private PrefabPool _prefabPool;
+        private IAudioService _audioService;
         private bool _isTouched;
         public SizeSetter SizeSetter => sizeSetter;
 
@@ -19,9 +23,10 @@ namespace Modules.Gameplay
 
         public BulletDeathZone DeathZone => bulletDeathZone;
 
-        public void Initialize(KilledEnemyChecker killedEnemyChecker, PrefabPool prefabPool)
+        public void Initialize(KilledEnemyChecker killedEnemyChecker, PrefabPool prefabPool, IAudioService audioService)
         {
             bulletMover.Initialize(killedEnemyChecker, prefabPool);
+            _audioService = audioService;
             _killedEnemyChecker = killedEnemyChecker;
             _prefabPool = prefabPool;
             bulletDeathZone.EnemyList.Clear();
@@ -37,6 +42,8 @@ namespace Modules.Gameplay
             if (other.CompareTag(Tags.Enemy))
             {
                 if (!other.TryGetComponent(out IInteractable _)) return;
+                Instantiate(shootParticles, transform.position, Quaternion.identity);
+                _audioService.PlayOneShotSound(bulletAudio,1);
                 bulletDeathZone.KillEnemies();
                 bulletMover.StopMove();
                 _prefabPool.Release(gameObject);

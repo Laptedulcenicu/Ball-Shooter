@@ -5,6 +5,7 @@ namespace Modules.Gameplay
 {
     public class GateView : MonoBehaviour, IInteractable
     {
+        [SerializeField] private AudioClip openDoorAudio;
         [SerializeField] private GateAnimator gateAnimator;
         [SerializeField] private float distance = 5;
         [SerializeField] private Transform openTriggerDoor;
@@ -24,12 +25,12 @@ namespace Modules.Gameplay
         private void SetOpenTriggerDoorPosition()
         {
             var forward = transform.forward;
-            openTriggerDoor.localPosition = new Vector3(forward.x, forward.y,  distance);
+            openTriggerDoor.localPosition = new Vector3(forward.x, forward.y, distance);
         }
 
         public void OpenDoor()
         {
-            //  _audioService.PlayOneShotSound();
+            _audioService.PlayOneShotSound(openDoorAudio, 1f);
             gateAnimator.OpenDoor();
         }
 
@@ -39,7 +40,6 @@ namespace Modules.Gameplay
             if (_isInteracted) return;
 
             _isInteracted = true;
-            //  _audioService.PlayOneShotSound();
             _gameLoopEvents.OnWin?.Invoke();
         }
     }

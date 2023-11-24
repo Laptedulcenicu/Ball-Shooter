@@ -550,6 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffeee1fb54d64656a87220baafed90cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openDoorAudio: {fileID: 8300000, guid: 4537a5e6ed9d8f44ba1e6a042a90b80f, type: 3}
   gateAnimator: {fileID: 4193981163078189321}
   distance: 5
   openTriggerDoor: {fileID: 1457698936409650150}

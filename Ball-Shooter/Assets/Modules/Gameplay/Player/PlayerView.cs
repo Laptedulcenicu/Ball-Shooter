@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Modules.Common;
+using UnityEngine;
 
 namespace Modules.Gameplay
 {
@@ -18,10 +19,10 @@ namespace Modules.Gameplay
 
         public PlayerMover PlayerMover => playerMover;
 
-        public void Initialize(GameLoopEvents gameLoopEvents, KilledEnemyChecker killedEnemyChecker)
+        public void Initialize(GameLoopEvents gameLoopEvents, KilledEnemyChecker killedEnemyChecker, IAudioService audioService)
         {
             playerMinimSizeChecker.Initialize(gameLoopEvents);
-            playerShoot.Initialize(killedEnemyChecker);
+            playerShoot.Initialize(killedEnemyChecker,audioService);
             triggerObserver.TriggerEnter += TriggerEnter;
         }
 

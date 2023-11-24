@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8551206781674255029}
   musicPlaylists:
-    tracks: []
+    tracks:
+    - {fileID: 8300000, guid: 51c47f6c7de54f243b87b20efe1dbca7, type: 3}
 --- !u!82 &8551206781674255029
 AudioSource:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

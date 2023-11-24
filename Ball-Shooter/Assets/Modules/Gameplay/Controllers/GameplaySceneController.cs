@@ -31,15 +31,14 @@ namespace Modules.Gameplay
         public InteractableController InteractableController => interactableController;
 
 
-        public void Initialize(IInputSource inputSource, IAudioService audioService,
-            ISceneTransitionService sceneTransitionService, GameLoopEvents gameLoopEvents, SizeConverter sizeConverter,
+        public void Initialize(IInputSource inputSource, IAudioService audioService, ISceneTransitionService sceneTransitionService, GameLoopEvents gameLoopEvents, SizeConverter sizeConverter,
             KilledEnemyChecker killedEnemyChecker)
         {
             SetInputSource(inputSource);
             InitializeInteractableController(inputSource, sizeConverter);
             InitializeEnemies(audioService);
             GateView.Initialize(audioService, gameLoopEvents);
-            Player.Initialize(gameLoopEvents,killedEnemyChecker);
+            Player.Initialize(gameLoopEvents,killedEnemyChecker,audioService);
             sceneTransitionService.FadeOut();
         }
 

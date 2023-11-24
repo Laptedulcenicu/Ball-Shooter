@@ -29,7 +29,6 @@ namespace Modules.Core
 
         public void Enter()
         {
-            _audioService.PlayMusic();
             _transitionService.ChangeScene(k_SceneName, SceneLoaded);
         }
 

@@ -26,7 +26,8 @@ namespace Modules.Core
 
             _gameStateMachine = new GameStateMachine();
             AddStates();
-
+            
+            _audioService.PlayMusic();
             _gameStateMachine.Enter<LoadProgressDataState>();
         }
 
