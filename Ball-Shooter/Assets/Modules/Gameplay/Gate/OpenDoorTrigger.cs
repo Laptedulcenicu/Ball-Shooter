@@ -13,7 +13,6 @@ namespace Modules.Gameplay
         {
             if (!_isInteracted)
             {
-                Debug.Log("DoorOpen");
                 _isInteracted = true;
                 gateView.OpenDoor();
             }

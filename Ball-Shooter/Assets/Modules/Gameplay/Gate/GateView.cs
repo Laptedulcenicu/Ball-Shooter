@@ -29,7 +29,6 @@ namespace Modules.Gameplay
 
         public void OpenDoor()
         {
-            Debug.Log("OpenDoor");
             //  _audioService.PlayOneShotSound();
             gateAnimator.OpenDoor();
         }
