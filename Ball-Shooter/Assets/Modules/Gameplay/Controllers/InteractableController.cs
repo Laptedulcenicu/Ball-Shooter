@@ -5,9 +5,13 @@ namespace Modules.Gameplay
 {
     public class InteractableController : MonoBehaviour
     {
-        private IInputSource _inputSource;
+        private const float k_SizeSpeedChange = 1;
 
+        private IInputSource _inputSource;
+        private SizeConverter _sizeConverter;
+        private PlayerView _playerView;
         private InputEventData _inputEventData = new(false);
+
         public bool CanControl { get; set; }
 
         private void Update()
@@ -15,23 +19,47 @@ namespace Modules.Gameplay
             if (!CanControl)
                 return;
 
-            if (_inputEventData.IsTapDown)
-            {
-            }
+            ChangeSize();
         }
 
         private void OnDestroy() => RemoveInputListeners();
 
-
-        public void Initialize(IInputSource inputSource)
+        public void Initialize(IInputSource inputSource, SizeConverter sizeConverter, PlayerView playerView)
         {
+            _sizeConverter = sizeConverter;
             _inputSource = inputSource;
+            _playerView = playerView;
+            CanControl = true;
             AddInputListeners();
         }
 
-        private void InputSourceOnTapDown(InputEventData inputEventData) => _inputEventData = inputEventData;
+        private void ChangeSize()
+        {
+            if (_inputEventData.IsTapDown)
+            {
+                _sizeConverter.ChangeSize(Time.deltaTime * k_SizeSpeedChange);
+            }
+        }
 
-        private void InputSourceOnDrop(InputEventData inputEventData) => _inputEventData = inputEventData;
+        private void InputSourceOnTapDown(InputEventData inputEventData)
+        {
+            if (CanControl)
+            {
+                _playerView.PlayerShoot.InitializeBullet();
+            }
+
+            _inputEventData = inputEventData;
+        }
+
+        private void InputSourceOnDrop(InputEventData inputEventData)
+        {
+            _inputEventData = inputEventData;
+
+            if (!CanControl) return;
+
+            _playerView.PlayerShoot.Shoot();
+            //   CanControl = false;
+        }
 
         private void AddInputListeners()
         {

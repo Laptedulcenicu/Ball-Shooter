@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Modules.Gameplay
 {
-    public class EnemyDeath : MonoBehaviour
+    public class EnemyView : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameObject deathFx;
         [SerializeField] private Collider enemyCollider;
@@ -19,9 +19,14 @@ namespace Modules.Gameplay
             _audioService = audioService;
         }
 
-        public void Die()
+        public void Interact()
         {
             if (_isDeath) return;
+            Die();
+        }
+
+        private void Die()
+        {
             enemyCollider.enabled = false;
             enemyAnimator.PlayDeath();
             DOVirtual.DelayedCall(1, ActivateFX);

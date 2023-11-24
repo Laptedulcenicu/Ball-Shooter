@@ -1,5 +1,4 @@
-﻿using System;
-using Modules.Common;
+﻿using Modules.Common;
 using Modules.Core.Scripts.Utilities;
 using Modules.Gameplay;
 using UnityEngine.SceneManagement;
@@ -8,13 +7,15 @@ namespace Modules.Core
 {
     public class GameLoopState : IState
     {
-        private readonly Action _onRestart;
         private readonly ProgressData _progressData;
         private readonly IInputSource _inputSource;
         private readonly IAudioService _audioService;
         private readonly GameStateMachine _gameStateMachine;
         private readonly ISceneTransitionService _sceneTransitionService;
         private readonly Level _level;
+
+        private GameLoopEvents _gameLoopEvents;
+        private SizeConverter _sizeConverter;
 
         public GameLoopState(Level level, IInputSource inputSource, IAudioService audioService,
             ISceneTransitionService sceneTransitionService, GameStateMachine gameStateMachine)
@@ -24,8 +25,6 @@ namespace Modules.Core
             _audioService = audioService;
             _gameStateMachine = gameStateMachine;
             _sceneTransitionService = sceneTransitionService;
-
-            _onRestart += RestartLevel;
         }
 
         private void RestartLevel()
@@ -35,9 +34,36 @@ namespace Modules.Core
 
         public void Enter()
         {
+            _gameLoopEvents = new GameLoopEvents();
             var scene = SceneManager.GetActiveScene();
             var sceneController = scene.GetComponent<GameplaySceneController>();
-            sceneController.Initialize(_inputSource, _audioService,_level, _sceneTransitionService,_onRestart);
+            _sizeConverter = new SizeConverter(sceneController.Player, sceneController.LineView);
+            InitializeGameplayUI(sceneController.UIController, sceneController.InteractableController);
+
+            sceneController.Initialize(_inputSource, _audioService, _sceneTransitionService, _gameLoopEvents,
+                _sizeConverter);
+        }
+
+        private void InitializeGameplayUI(IUIController uiController, InteractableController interactableController)
+        {
+            uiController.Initialize(_level.CurrentLevel);
+            uiController.OnRestart += RestartLevel;
+            uiController.OnNextLevel += RestartLevel;
+            uiController.OnPlay += uiController.Play;
+            _gameLoopEvents.OnWin += () => Win(uiController, interactableController);
+            _gameLoopEvents.OnFail += () => Fail(uiController, interactableController);
+        }
+        
+        private void Fail(IUIController uiController, InteractableController interactableController)
+        {
+            interactableController.CanControl = false;
+            uiController.ActivateLosePanel();
+        }
+
+        private void Win(IUIController uiController, InteractableController interactableController)
+        {
+            interactableController.CanControl = false;
+            uiController.ActivateWinPanel();
         }
     }
 }

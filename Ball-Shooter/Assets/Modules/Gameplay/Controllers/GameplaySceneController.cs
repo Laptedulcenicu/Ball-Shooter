@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Modules.Common;
 using UnityEngine;
@@ -15,10 +14,10 @@ namespace Modules.Gameplay
         [SerializeField] private Transform[] enemiesMarkers;
 
         private IInputController _inputController;
-        public GameObject Player { get; set; }
-        public GameObject Gate { get; set; }
-        public GameObject LineView { get; set; }
-        public List<EnemyDeath> Enemies { get; } = new();
+        public PlayerView Player { get; set; }
+        public GateView GateView { get; set; }
+        public LineView LineView { get; set; }
+        public List<EnemyView> Enemies { get; } = new();
         public IUIController UIController { get; set; }
 
         public Transform PlayerMarker => playerMarker;
@@ -29,20 +28,16 @@ namespace Modules.Gameplay
 
         public Transform[] EnemiesMarkers => enemiesMarkers;
 
+        public InteractableController InteractableController => interactableController;
 
-        public void Initialize(IInputSource inputSource, IAudioService audioService, Level level, ISceneTransitionService sceneTransitionService, Action onRestart)
+
+        public void Initialize(IInputSource inputSource, IAudioService audioService, ISceneTransitionService sceneTransitionService, GameLoopEvents gameLoopEvents, SizeConverter sizeConverter)
         {
             SetInputSource(inputSource);
-            InitializeInteractableController(inputSource);
+            InitializeInteractableController(inputSource,sizeConverter);
             InitializeEnemies(audioService);
-            InitializeSizeController();
-            InitializeGameplayUI(level, onRestart);
+            GateView.Initialize(audioService, gameLoopEvents);
             sceneTransitionService.FadeOut();
-        }
-
-
-        private void InitializeSizeController()
-        {
         }
 
         private void InitializeEnemies(IAudioService audioService)
@@ -53,29 +48,13 @@ namespace Modules.Gameplay
             }
         }
 
-        private void InitializeInteractableController(IInputSource inputSource)
-        {
-            interactableController.Initialize(inputSource);
-        }
-
         private void SetInputSource(IInputSource inputSource)
         {
             _inputController = inputControllerParent.GetComponent<IInputController>();
             _inputController.Setup(inputSource);
         }
 
-        private void InitializeGameplayUI(Level level, Action onRestart)
-        {
-            UIController.Initialize(level.CurrentLevel);
-            UIController.OnRestart += onRestart;
-            UIController.OnNextLevel += onRestart;
-            UIController.OnPlay += Play;
-        }
-
-        private void Play()
-        {
-            interactableController.CanControl = true;
-            UIController.Play();
-        }
+        private void InitializeInteractableController(IInputSource inputSource,SizeConverter sizeConverter) =>
+            interactableController.Initialize(inputSource,sizeConverter,Player);
     }
 }

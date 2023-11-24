@@ -2,6 +2,7 @@
 using Modules.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Modules.Services.UIService
@@ -17,15 +18,19 @@ namespace Modules.Services.UIService
         [SerializeField] private GameObject losePanel;
         [SerializeField] private TextMeshProUGUI textLevel;
 
-        [SerializeField] private Button playButton;
         [SerializeField] private Button restartButton;
         [SerializeField] private Button nextLevelButton;
+        [SerializeField] private EventTrigger playButton;
 
         private void Awake()
         {
-            playButton.onClick.AddListener(() => OnPlay?.Invoke());
             restartButton.onClick.AddListener(() => OnRestart?.Invoke());
             nextLevelButton.onClick.AddListener(() => OnNextLevel?.Invoke());
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((_) => OnPlay?.Invoke());
+            playButton.triggers.Add(entry);
         }
 
         public void Initialize(int level)

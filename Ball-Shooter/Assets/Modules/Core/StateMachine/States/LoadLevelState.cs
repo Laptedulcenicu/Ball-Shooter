@@ -61,7 +61,7 @@ namespace Modules.Core
         private void InitPlayer(GameplaySceneController sceneController)
         {
             var player = _sceneFactory.CreatePlayer();
-            sceneController.Player = player;
+            sceneController.Player = player.GetComponent<PlayerView>();
             InitObject(player.transform, sceneController.PlayerMarker);
         }
 
@@ -69,14 +69,14 @@ namespace Modules.Core
         private void InitLineView(GameplaySceneController sceneController)
         {
             var lineView = _sceneFactory.CreateLineView();
-            sceneController.LineView = lineView;
+            sceneController.LineView = lineView.GetComponent<LineView>();
             InitObject(lineView.transform, sceneController.LineViewMarker);
         }
 
         private void InitGate(GameplaySceneController sceneController)
         {
             var gate = _sceneFactory.CreateGate();
-            sceneController.Gate = gate;
+            sceneController.GateView = gate.GetComponent<GateView>();
             InitObject(gate.transform, sceneController.GateMarker);
         }
 
@@ -85,7 +85,7 @@ namespace Modules.Core
             foreach (var sceneControllerEnemiesMarker in sceneController.EnemiesMarkers)
             {
                 var currentEnemy = _sceneFactory.CreateEnemy();
-                sceneController.Enemies.Add(currentEnemy.GetComponent<EnemyDeath>());
+                sceneController.Enemies.Add(currentEnemy.GetComponent<EnemyView>());
                 InitObject(currentEnemy.transform, sceneControllerEnemiesMarker);
             }
         }
