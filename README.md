@@ -1,6 +1,7 @@
 # Ball-Shooter
 
 ![Screenshot_2](https://github.com/Laptedulcenicu/Ball-Shooter/assets/43432500/03f519e3-be64-4dcb-a21b-cc15216c90e0)
+
 Task
 Gameplay
 On the screen, there is a ball-player in the bottom left corner, and the goal in the top right corner, where the ball should reach. Obstacles block the path. The player's ball creates shots based on its size; the path must be cleared for the player's ball to bounce along the cleared track towards the final goal.
@@ -17,6 +18,5 @@ If the player holds the tap for too long, and the player's ball completely trans
 
 Initially, the ball's size should be more than enough with a 20% margin for completion.
 
-Send the completed task as an Android build, a gameplay video on YouTube, and the Unity project source.
 https://github.com/Laptedulcenicu/Ball-Shooter/assets/43432500/d601508c-0835-49ea-afc8-459b5c835075
 
