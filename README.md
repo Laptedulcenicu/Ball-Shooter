@@ -1,5 +1,8 @@
 # Ball-Shooter
 
+
+https://github.com/Laptedulcenicu/Ball-Shooter/assets/43432500/d601508c-0835-49ea-afc8-459b5c835075
+
 ![Screenshot_2](https://github.com/Laptedulcenicu/Ball-Shooter/assets/43432500/03f519e3-be64-4dcb-a21b-cc15216c90e0)
 
 Task
@@ -21,5 +24,5 @@ If the player holds the tap for too long, and the player's ball completely trans
 
 Initially, the ball's size should be more than enough with a 20% margin for completion.
 
-https://github.com/Laptedulcenicu/Ball-Shooter/assets/43432500/d601508c-0835-49ea-afc8-459b5c835075
+
 
